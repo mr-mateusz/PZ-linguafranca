@@ -28,3 +28,6 @@
 # Maven
 log/
 target/
+.mvn/
+mvnw
+mvnw.cmd
