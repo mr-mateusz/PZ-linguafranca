@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: authorization-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: user
+      password: ${CONFIGURATION_PASSWORD}
+      fail-fast: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    url: jdbc:mysql://192.168.99.100:3306/gamedb
+    username: app_user
+    password: test123

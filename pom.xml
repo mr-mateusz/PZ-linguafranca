@@ -39,6 +39,8 @@
 	<modules>
 		<module>configuration</module>
 		<module>discovery</module>
+		<module>authorization-service</module>
+        <module>gateway</module>
 	</modules>
 	
 </project>

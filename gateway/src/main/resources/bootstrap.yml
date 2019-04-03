@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: user
+      password: ${CONFIGURATION_PASSWORD}
+      fail-fast: true
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
