@@ -41,6 +41,7 @@
 		<module>discovery</module>
 		<module>authorization-service</module>
         <module>gateway</module>
+        <module>database-service</module>
 	</modules>
 	
 </project>

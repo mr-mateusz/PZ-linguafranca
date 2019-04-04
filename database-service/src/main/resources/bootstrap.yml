@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: database-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: user
+      password: ${CONFIGURATION_PASSWORD}
+      fail-fast: true
+
