@@ -1,17 +1,11 @@
 spring:
-#  h2:
-#    console:
-#      enabled: true
-#      settings:
-#              web-allow-others: true
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  datasource:
-    initialization-mode: always
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: user
+      password: ${MONGODB_PASSWORD}
+      database: linguafranca
 
 server:
   port: 8000

@@ -1,6 +1,5 @@
 package pl.edu.wat.wcy.pz.authorization.configuration;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +32,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("test")
+                .withClient("browser")
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("ui");
     }

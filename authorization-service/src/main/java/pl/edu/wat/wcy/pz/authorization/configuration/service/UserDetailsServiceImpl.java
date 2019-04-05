@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.edu.wat.wcy.pz.authorization.entity.User;
 import pl.edu.wat.wcy.pz.authorization.repository.UserRepository;
 
 @Service
@@ -16,7 +15,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found." ));
-        return user;
+        return userRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " not found."));
     }
 }
