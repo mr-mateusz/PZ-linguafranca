@@ -1,9 +1,11 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -21,13 +23,16 @@ public class Category {
     private Long categoryId;
 
     @Column(name = "NAME")
+    @Length(min = 3, max = 50)
     private String name;
 
     @Column(name = "DESCRIPTION")
+    @Length(max = 255)
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")
+    @JsonIgnore
     private User owner;
 
     @Column(name = "IS_PUBLIC")

@@ -46,6 +46,16 @@ public class DatabaseServiceApplication {
 
             System.out.println(category);
 
+            Category category2 = Category.builder()
+                    .name("City")
+                    .description("Livin' in the City")
+                    .owner(null)
+                    .isPublic(true)
+                    .difficulty(5)
+                    .build();
+
+            categoryRepository.save(category2);
+
             Collection collection = Collection.builder()
                     .user(user)
                     .isModifiable(false)
