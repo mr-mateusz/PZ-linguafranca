@@ -1,24 +1,39 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@AllArgsConstructor
+import javax.persistence.*;
+
+@Data
+@Builder
 @NoArgsConstructor
-@Document(collection = "answers")
+@AllArgsConstructor
+@Entity
+@Table(name = "WORD_ANSWER")
 public class WordAnswer {
 
     @Id
-    private Long id;
-    private Long wordId;
-    private Long collectionId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "WORD_ANSWER_ID")
+    private Long wordAnswerId;
+
+    @ManyToOne
+    @JoinColumn(name = "WORD_ID")
+    private Word word;
+
+    @ManyToOne
+    @JoinColumn(name = "COLLECTION_ID")
+    private Collection collection;
+
+    @Column(name = "CORRECT_ANSWERS")
     private int correctAnswers;
+
+    @Column(name = "INCORRECT_ANSWERS")
     private int incorrectAnswers;
+
+    @Column(name = "COUNTER")
     private int counter;
 }

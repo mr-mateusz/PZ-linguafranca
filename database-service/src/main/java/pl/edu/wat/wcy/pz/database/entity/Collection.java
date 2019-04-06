@@ -1,23 +1,36 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+import javax.persistence.*;
+
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "collections")
+@Entity
+@Table(name = "COLLECTION")
 public class Collection {
 
     @Id
-    private Long id;
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "COLLECTION_ID")
+    private Long collectionId;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    @Column(name = "IS_MODIFIABLE")
     private boolean isModifiable;
+
+    @Column(name = "LEARNING_PROGRESS")
     private int learningProgress;
-    @DBRef
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 }

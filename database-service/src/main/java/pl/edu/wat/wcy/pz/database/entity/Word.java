@@ -1,26 +1,43 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
+@Builder
 @NoArgsConstructor
-@Document(collection = "words")
+@AllArgsConstructor
+@Entity
+@Table(name = "WORD")
 public class Word {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "WORD_ID")
+    private Long wordId;
+
+    @Column(name = "PL_TRANSLATION")
     private String plTranslation;
+
+    @Column(name = "ENG_TRANSLATION")
     private String engTranslation;
+
+    @Column(name = "DIFFICULTY")
     private int difficulty;
-    private List<String> engExamples;
-    private Long categoryId;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "word"
+    )
+    private List<Example> engExamples;
+
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category;
 }

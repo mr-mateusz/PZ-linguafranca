@@ -7,4 +7,3 @@ spring:
       username: user
       password: ${CONFIGURATION_PASSWORD}
       fail-fast: true
-
