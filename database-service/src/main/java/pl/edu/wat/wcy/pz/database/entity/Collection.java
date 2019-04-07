@@ -1,5 +1,6 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Collection {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
+    @JsonIgnore
     private User user;
 
     @Column(name = "IS_MODIFIABLE")

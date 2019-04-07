@@ -1,5 +1,6 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,5 +40,10 @@ public class Word {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
+    @JsonIgnore
     private Category category;
+
+    @Column(name = "IS_REPORTED")
+    @JsonIgnore
+    private Boolean isReported;
 }

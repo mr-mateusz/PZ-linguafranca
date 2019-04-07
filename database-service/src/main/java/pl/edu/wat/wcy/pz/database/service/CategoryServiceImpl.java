@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAvailableCategories(Principal principal) {
-        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + "not found"));
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + " not found"));
 
         List<Category> categories = categoryRepository.findAllByIsPublicIsTrueOrOwner(user);
         System.out.println(categories);
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createNewCategory(Category category, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + "not found"));
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + " not found"));
 
         category.setOwner(user);
         category.setPublic(false);
@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
     public ResponseEntity<Object> joinToCategory(Long id, Principal principal) {
 
         Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Category: " + id + " not found!"));
-        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + "not found"));
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User: " + principal.getName() + " not found"));
 
         if (!category.isPublic())
             return ResponseEntity.badRequest().build();

@@ -1,9 +1,6 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "USER")
 public class User {

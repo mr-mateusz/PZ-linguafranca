@@ -1,9 +1,7 @@
 package pl.edu.wat.wcy.pz.database.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +9,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "EXAMPLE")
 public class Example {
@@ -25,5 +24,11 @@ public class Example {
 
     @ManyToOne
     @JoinColumn(name = "WORD_ID")
+    @JsonIgnore
     private Word word;
+
+    public Example(String example, Word word) {
+        this.example = example;
+        this.word = word;
+    }
 }
