@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface WordRepository extends JpaRepository<Word, Long> {
     List<Word> findAllByCategory(Category category);
+
+    List<Word> findAllByIsReported(Boolean isReported);
 }

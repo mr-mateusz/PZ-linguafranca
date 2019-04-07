@@ -13,6 +13,7 @@ import pl.edu.wat.wcy.pz.authorization.entity.User;
 import pl.edu.wat.wcy.pz.authorization.repository.UserRepository;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 @SpringBootApplication
@@ -40,6 +41,15 @@ public class AuthorizationServiceApplication {
             user.setFirstName("FirstName");
             user.setSecondName("SecondName");
             user.setRoles(new HashSet<>(Arrays.asList(RoleName.ROLE_USER, RoleName.ROLE_ADMIN)));
+            userRepository.save(user);
+
+
+            User newUser = new User();
+            user.setEmail("user");
+            user.setPassword(bCryptPasswordEncoder.encode("user"));
+            user.setFirstName("FirstName");
+            user.setSecondName("SecondName");
+            user.setRoles(new HashSet<>(Collections.singletonList(RoleName.ROLE_USER)));
             userRepository.save(user);
         };
     }
