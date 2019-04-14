@@ -6,14 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.wcy.pz.database.dto.CollectionDto;
 import pl.edu.wat.wcy.pz.database.dto.WordDto;
-import pl.edu.wat.wcy.pz.database.entity.Collection;
-import pl.edu.wat.wcy.pz.database.entity.Example;
-import pl.edu.wat.wcy.pz.database.entity.User;
-import pl.edu.wat.wcy.pz.database.entity.Word;
-import pl.edu.wat.wcy.pz.database.repository.CategoryRepository;
-import pl.edu.wat.wcy.pz.database.repository.CollectionRepository;
-import pl.edu.wat.wcy.pz.database.repository.UserRepository;
-import pl.edu.wat.wcy.pz.database.repository.WordRepository;
+import pl.edu.wat.wcy.pz.database.entity.*;
+import pl.edu.wat.wcy.pz.database.repository.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -27,6 +21,7 @@ public class CollectionServiceImpl implements CollectionService {
     private CollectionRepository collectionRepository;
     private CategoryRepository categoryRepository;
     private WordRepository wordRepository;
+    private WordAnswerRepository wordAnswerRepository;
 
     @Override
     public List<Collection> getUserCollections(Principal principal) {
@@ -68,12 +63,19 @@ public class CollectionServiceImpl implements CollectionService {
         List<Word> words = wordRepository.findAllByCategory(collection.getCategory());
 
         List<WordDto> wordDtos = words.stream()
-                .map(word -> new WordDto(
-                        word.getWordId(),
-                        word.getPlTranslation(),
-                        word.getEngTranslation(),
-                        word.getDifficulty(),
-                        word.getEngExamples().stream().map(Example::getExample).collect(Collectors.toList()))
+                .map(word -> {
+                            WordAnswer wordAnswer = wordAnswerRepository.findByWordAndCollection(word, collection).orElse(new WordAnswer(null, null, 0, 0, 0));
+                            return new WordDto(
+                                    word.getWordId(),
+                                    word.getPlTranslation(),
+                                    word.getEngTranslation(),
+                                    word.getDifficulty(),
+                                    word.getEngExamples().stream().map(Example::getExample).collect(Collectors.toList()),
+                                    wordAnswer.getCorrectAnswers(),
+                                    wordAnswer.getIncorrectAnswers(),
+                                    wordAnswer.isKnown()
+                            );
+                        }
                 ).collect(Collectors.toList());
         return wordDtos;
     }
@@ -97,6 +99,12 @@ public class CollectionServiceImpl implements CollectionService {
         word.setEngExamples(examples);
 
         Word savedWord = wordRepository.save(word);
+
+        int wordsInCategory = wordRepository.findAllByCategory(collection.getCategory()).size();
+        long learnedWords = wordAnswerRepository.findAllByCollection(collection).stream().filter(WordAnswer::isKnown).count();
+        collection.setLearningProgress(Math.toIntExact(learnedWords * 100 / wordsInCategory));
+        collectionRepository.save(collection);
+
         return new WordDto(
                 savedWord.getWordId(),
                 savedWord.getPlTranslation(),

@@ -32,6 +32,10 @@ public class DatabaseServiceApplication {
 
             userRepository.save(user);
 
+            User user2 = new User();
+            user2.setUsername("user");
+            userRepository.save(user2);
+
             Category category = Category.builder()
                     .name("Animals")
                     .description("Example animals category!")
