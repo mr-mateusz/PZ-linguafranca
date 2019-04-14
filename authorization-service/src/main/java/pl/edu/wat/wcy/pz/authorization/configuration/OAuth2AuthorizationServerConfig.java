@@ -2,6 +2,7 @@ package pl.edu.wat.wcy.pz.authorization.configuration;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -24,9 +25,12 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     private UserDetailsServiceImpl userDetailsService;
 
-    public OAuth2AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService) {
+    private Environment environment;
+
+    public OAuth2AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService, Environment environment) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
+        this.environment = environment;
     }
 
     @Override
@@ -34,7 +38,12 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         clients.inMemory()
                 .withClient("browser")
                 .authorizedGrantTypes("refresh_token", "password")
-                .scopes("ui");
+                .scopes("ui")
+                .and()
+                .withClient("database-service")
+                .secret(environment.getProperty("DATABASE_SERVICE_PASSWORD"))
+                .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("server");
     }
 
     @Override

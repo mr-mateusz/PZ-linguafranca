@@ -16,3 +16,12 @@ spring:
     url: jdbc:mysql://192.168.99.100:3306/gamedb
     username: app_user
     password: ${MYSQL_PASSWORD}
+
+security:
+  oauth2:
+    client:
+      clientId: database-service
+      clientSecret: ${DATABASE_SERVICE_PASSWORD}
+      accessTokenUri: http://localhost:8000/oauth/token
+      grant-type: client_credentials
+      scope: server

@@ -29,7 +29,6 @@ public class AuthorizationServiceApplication {
     @Bean
     ApplicationRunner init(UserRepository userRepository) {
         return args -> {
-
             userRepository.deleteAll();
 
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
