@@ -1,2 +1,21 @@
 server:
   port: 9000
+
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+
+  routes:
+    authorization-service:
+        path: /authorization-service/**
+        url: http://localhost:8000
+        stripPrefix: true
+        sensitiveHeaders:
+
+    database-service:
+            path: /db/**
+            serviceId: database-service
+            stripPrefix: true
+            sensitiveHeaders:

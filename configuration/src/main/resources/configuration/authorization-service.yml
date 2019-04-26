@@ -1,11 +1,12 @@
 spring:
   data:
     mongodb:
-      host: localhost
+      host: 192.168.99.100
       port: 27017
       username: user
       password: ${MONGODB_PASSWORD}
       database: linguafranca
+      authentication-database: admin
 
 server:
   port: 8000

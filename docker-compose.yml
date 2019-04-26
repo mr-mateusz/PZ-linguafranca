@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql:latest
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD:
+            MYSQL_DATABASE: gamedb 
+            MYSQL_USER: app_user
+            MYSQL_PASSWORD:
+        ports:
+            - 3306:3306    
+        container_name: mysql
+        
+    mymongo:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: user
+            MONGO_INITDB_ROOT_PASSWORD:
+            MONGO_INITDB_DATABASE: linguafranca
+        ports:
+            - 27017:27017
+            - 27018:27018
+            - 27019:27019
+        container_name: mymongo
